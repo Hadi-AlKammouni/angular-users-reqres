@@ -1,0 +1,91 @@
+<div class="user-details-container">
+  <div class="user-details-content">
+    <!-- Back button -->
+    <button mat-raised-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Users
+    </button>
+
+    <!-- Loading state -->
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading user details...</p>
+      </div>
+    }
+
+    <!-- Error state -->
+    @if (error() && !isLoading()) {
+      <div class="error-message">
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="warn" (click)="retryLoadUser()">Retry</button>
+      </div>
+    }
+
+    <!-- User details card -->
+    @if (user() && !isLoading()) {
+      <mat-card class="user-details-card">
+        <mat-card-header>
+          <div class="user-avatar-container">
+            <img [src]="user()!.avatar" [alt]="getFullName()" class="user-avatar-large" />
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="user-info">
+            <!-- Name -->
+            <div class="info-section">
+              <h1 class="user-full-name">{{ getFullName() }}</h1>
+              <p class="user-id">ID: {{ user()?.id }}</p>
+            </div>
+
+            <!-- Email -->
+            <div class="info-section">
+              <h3 class="section-title">Email</h3>
+              <p class="info-value">
+                <a [href]="'mailto:' + user()?.email" class="email-link">
+                  {{ user()?.email }}
+                </a>
+              </p>
+            </div>
+
+            <!-- First Name -->
+            <div class="info-section">
+              <h3 class="section-title">First Name</h3>
+              <p class="info-value">{{ user()?.first_name }}</p>
+            </div>
+
+            <!-- Last Name -->
+            <div class="info-section">
+              <h3 class="section-title">Last Name</h3>
+              <p class="info-value">{{ user()?.last_name }}</p>
+            </div>
+
+            <!-- Avatar -->
+            <div class="info-section">
+              <h3 class="section-title">Avatar</h3>
+              <p class="info-value">
+                <a [href]="user()?.avatar" target="_blank" class="avatar-link"> View Full Image </a>
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Back to Users
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+
+    <!-- Empty state (no user found) -->
+    @if (!user() && !isLoading() && !error()) {
+      <div class="empty-state">
+        <p>No user found.</p>
+        <button mat-raised-button (click)="goBack()">Back to Users</button>
+      </div>
+    }
+  </div>
+</div>
