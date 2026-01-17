@@ -1,0 +1,26 @@
+/* Global Loading Bar */
+.global-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 4px;
+
+  ::ng-deep {
+    .mdc-linear-progress__bar-inner {
+      border-color: #1976d2;
+    }
+
+    .mdc-linear-progress__buffer {
+      background-color: rgba(25, 118, 210, 0.2);
+    }
+  }
+}
+
+/* Main container */
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
