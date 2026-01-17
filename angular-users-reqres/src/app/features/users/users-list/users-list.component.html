@@ -1,0 +1,59 @@
+<div class="users-list-container">
+  <div class="users-list-content">
+    <!-- Error message -->
+    @if (error()) {
+      <div class="error-message">
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="warn" (click)="retryLoadUsers()">Retry</button>
+      </div>
+    }
+
+    <!-- Loading spinner -->
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading users...</p>
+      </div>
+    }
+
+    <!-- Users grid -->
+    @if (!isLoading() && users().length > 0) {
+      <div class="users-grid">
+        @for (user of users(); track user.id) {
+          <mat-card class="user-card" (click)="viewUserDetails(user.id)">
+            <mat-card-header>
+              <div class="user-avatar">
+                <img [src]="user.avatar" [alt]="getFullName(user)" />
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <h3 class="user-name">{{ getFullName(user) }}</h3>
+              <p class="user-email">{{ user.email }}</p>
+              <p class="user-id">ID: {{ user.id }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container">
+        <mat-paginator
+          [length]="totalUsers()"
+          [pageSize]="perPage()"
+          [pageIndex]="pageIndex()"
+          [hidePageSize]="true"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    }
+
+    <!-- Empty state -->
+    @if (!isLoading() && users().length === 0 && !error()) {
+      <div class="empty-state">
+        <p>No users found.</p>
+      </div>
+    }
+  </div>
+</div>
