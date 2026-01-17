@@ -1,0 +1,83 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="header-container">
+    <!-- Logo / Title -->
+    <div class="header-title">
+      <mat-icon>people</mat-icon>
+      <span>Users Management</span>
+    </div>
+
+    <!-- Instant Search Bar (no button) -->
+    <div class="search-form">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search User by ID</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter user ID (e.g., 1, 5, 12)"
+          [ngModel]="searchInput()"
+          (ngModelChange)="onSearchInputChange($event)"
+          name="userId"
+          #searchBox
+        />
+
+        <!-- Clear button suffix -->
+        @if (searchInput()) {
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="clearSearch()"
+            aria-label="Clear search"
+            class="clear-button"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+
+        <!-- Search icon suffix when not searching -->
+        @if (!searchInput() && !isSearching()) {
+          <mat-icon matSuffix class="search-icon">search</mat-icon>
+        }
+
+        <!-- Loading spinner suffix when searching -->
+        @if (isSearching()) {
+          <mat-spinner matSuffix diameter="24" class="search-spinner"></mat-spinner>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Home Button -->
+    <button mat-icon-button routerLink="/users" aria-label="Go to users list" class="home-button">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+
+  <!-- Error Message -->
+  @if (searchError()) {
+    <div class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ searchError() }}</span>
+    </div>
+  }
+
+  <!-- Search Result Card (clickable to navigate) -->
+  @if (foundUser()) {
+    <div class="search-result-container">
+      <mat-card class="search-result-card" (click)="navigateToUser()">
+        <div class="result-content">
+          <img
+            [src]="foundUser()?.avatar"
+            [alt]="foundUser()?.first_name + ' ' + foundUser()?.last_name"
+            class="result-avatar"
+          />
+          <div class="result-info">
+            <h3 class="result-name">{{ foundUser()?.first_name }} {{ foundUser()?.last_name }}</h3>
+            <p class="result-email">{{ foundUser()?.email }}</p>
+            <span class="result-id">ID: {{ foundUser()?.id }}</span>
+          </div>
+          <mat-icon class="result-arrow">arrow_forward</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+  }
+</mat-toolbar>
