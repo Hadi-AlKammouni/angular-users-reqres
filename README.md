@@ -67,7 +67,7 @@ npm install -g @angular/cli@20
 
 ```bash
 git clone https://github.com/Hadi-AlKammouni/angular-users-reqres.git
-cd angular-users-reqres
+cd angular-users-reqres/angular-users-reqres
 ```
 
 2. **Install dependencies**:
