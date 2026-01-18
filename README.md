@@ -91,11 +91,13 @@ The application uses the ReqRes API.
 
 1. **Create the environment file**:
 
+Windows PowerShell
 ```bash
-# Windows PowerShell
 Copy-Item src/environments/environment.template.ts src/environments/environment.ts
+```
 
-# Linux/Mac
+Linux/Mac
+```bash
 cp src/environments/environment.template.ts src/environments/environment.ts
 ```
 
