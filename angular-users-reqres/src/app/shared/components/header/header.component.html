@@ -1,26 +1,31 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <div class="header-container">
-    <!-- Logo / Title -->
+    <!-- Logo / Title with Welcome Message -->
     <div class="header-title">
-      <mat-icon>people</mat-icon>
-      <span>Users Management</span>
+      <mat-icon class="logo-icon">people</mat-icon>
+      <div class="title-text">
+        <span class="main-title">Welcome to Users Hub</span>
+        <span class="subtitle">Discover & Manage Users</span>
+      </div>
     </div>
 
-    <!-- Instant Search Bar (no button) -->
+    <!-- Instant Search Bar -->
     <div class="search-form">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search User by ID</mat-label>
         <input
           matInput
           type="text"
-          placeholder="Enter user ID (e.g., 1, 5, 12)"
+          [placeholder]="isFocused() ? 'e.g., 1, 5, 12' : ''"
           [ngModel]="searchInput()"
           (ngModelChange)="onSearchInputChange($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
           name="userId"
-          #searchBox
+          autocomplete="off"
         />
 
-        <!-- Clear button suffix -->
+        <!-- Clear button -->
         @if (searchInput()) {
           <button
             mat-icon-button
@@ -34,33 +39,30 @@
           </button>
         }
 
-        <!-- Search icon suffix when not searching -->
+        <!-- Search icon when idle -->
         @if (!searchInput() && !isSearching()) {
           <mat-icon matSuffix class="search-icon">search</mat-icon>
         }
 
-        <!-- Loading spinner suffix when searching -->
+        <!-- Loading spinner -->
         @if (isSearching()) {
-          <mat-spinner matSuffix diameter="24" class="search-spinner"></mat-spinner>
+          <mat-spinner matSuffix diameter="20" class="search-spinner"></mat-spinner>
         }
       </mat-form-field>
     </div>
-
-    <!-- Home Button -->
-    <button mat-icon-button routerLink="/users" aria-label="Go to users list" class="home-button">
-      <mat-icon>home</mat-icon>
-    </button>
   </div>
 
-  <!-- Error Message -->
+  <!-- Error Message with enhanced visibility -->
   @if (searchError()) {
-    <div class="error-message">
-      <mat-icon>error_outline</mat-icon>
-      <span>{{ searchError() }}</span>
+    <div class="error-container">
+      <div class="error-message">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        <span>{{ searchError() }}</span>
+      </div>
     </div>
   }
 
-  <!-- Search Result Card (clickable to navigate) -->
+  <!-- Search Result Card -->
   @if (foundUser()) {
     <div class="search-result-container">
       <mat-card class="search-result-card" (click)="navigateToUser()">
@@ -73,7 +75,6 @@
           <div class="result-info">
             <h3 class="result-name">{{ foundUser()?.first_name }} {{ foundUser()?.last_name }}</h3>
             <p class="result-email">{{ foundUser()?.email }}</p>
-            <span class="result-id">ID: {{ foundUser()?.id }}</span>
           </div>
           <mat-icon class="result-arrow">arrow_forward</mat-icon>
         </div>

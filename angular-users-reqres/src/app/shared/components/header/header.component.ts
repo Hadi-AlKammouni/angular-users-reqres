@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { signal } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, Subject } from 'rxjs';
 
 import { ApiService } from '../../../core/services/api.service';
@@ -20,7 +20,6 @@ import { User } from '../../../core/models/user.model';
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink,
     MatToolbarModule,
     MatInputModule,
     MatFormFieldModule,
@@ -28,6 +27,7 @@ import { User } from '../../../core/models/user.model';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatTooltipModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -40,18 +40,18 @@ export class HeaderComponent {
   isSearching = signal(false);
   searchError = signal<string | null>(null);
   foundUser = signal<User | null>(null);
+  isFocused = signal(false);
   private searchSubject = new Subject<string>();
 
   constructor() {
-    // Debounce search input by 300ms and auto-search when user enters valid ID
-    this.searchSubject.pipe(debounceTime(300)).subscribe((userId) => {
+    // Debounce search input by 400ms and auto-search when user enters valid ID
+    this.searchSubject.pipe(debounceTime(400)).subscribe((userId) => {
       this.performSearch(userId);
     });
   }
 
   /**
-   * Handle search input changes - debounced instant search
-   * Automatically searches when user enters a valid numeric ID
+   * Handle search input changes with debounced instant search
    */
   onSearchInputChange(value: string): void {
     this.searchInput.set(value);
@@ -60,15 +60,14 @@ export class HeaderComponent {
 
     const trimmedValue = value.trim();
 
-    // Clear search if input is empty
     if (!trimmedValue) {
       this.isSearching.set(false);
       return;
     }
 
-    // Validate and search if numeric
+    // Validate numeric input
     if (!/^\d+$/.test(trimmedValue)) {
-      this.searchError.set('Please enter numeric user ID only');
+      this.searchError.set('Please enter a numeric user ID');
       this.isSearching.set(false);
       return;
     }
@@ -80,20 +79,17 @@ export class HeaderComponent {
 
   /**
    * Perform the actual search after debounce
-   * Stores the found user but does NOT auto-navigate
    */
   private performSearch(userId: string): void {
-    // Attempt to fetch user from API
     this.apiService.getUserById(Number(userId)).subscribe({
       next: (response) => {
         this.isSearching.set(false);
-        // Store the found user for manual navigation
         this.foundUser.set(response.data);
       },
       error: () => {
         this.isSearching.set(false);
         this.foundUser.set(null);
-        this.searchError.set('User not found. Please check the ID and try again.');
+        this.searchError.set('User not found. Please verify the ID and try again.');
       },
     });
   }
@@ -109,12 +105,26 @@ export class HeaderComponent {
   }
 
   /**
-   * Clear search input, error, and found user
+   * Clear search input and results
    */
   clearSearch(): void {
     this.searchInput.set('');
     this.searchError.set(null);
     this.isSearching.set(false);
     this.foundUser.set(null);
+  }
+
+  /**
+   * Handle input focus event
+   */
+  onFocus(): void {
+    this.isFocused.set(true);
+  }
+
+  /**
+   * Handle input blur event
+   */
+  onBlur(): void {
+    this.isFocused.set(false);
   }
 }
