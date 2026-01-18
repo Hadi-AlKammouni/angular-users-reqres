@@ -62,6 +62,8 @@ export class HeaderComponent {
 
     if (!trimmedValue) {
       this.isSearching.set(false);
+      // Push empty value to cancel any pending searches
+      this.searchSubject.next('');
       return;
     }
 
@@ -81,6 +83,12 @@ export class HeaderComponent {
    * Perform the actual search after debounce
    */
   private performSearch(userId: string): void {
+    // Skip search if userId is empty (happens when input is cleared)
+    if (!userId || !userId.trim()) {
+      this.isSearching.set(false);
+      return;
+    }
+
     this.apiService.getUserById(Number(userId)).subscribe({
       next: (response) => {
         this.isSearching.set(false);
