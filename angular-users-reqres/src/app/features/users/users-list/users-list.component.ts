@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { ApiService } from '../../../core/services/api.service';
 import { User } from '../../../core/models/user.model';
+import { MatIcon } from '@angular/material/icon';
 
 /**
  * Users list component with paginated user cards
@@ -21,6 +22,7 @@ import { User } from '../../../core/models/user.model';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatIcon,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',

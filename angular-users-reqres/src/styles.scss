@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+// Global tooltip styling for Material Design tooltips
+.mat-mdc-tooltip {
+  background-color: #424242 !important;
+
+  .mdc-tooltip__surface {
+    background-color: #424242 !important;
+    color: #ffffff !important;
+    font-size: 0.875rem !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+}
