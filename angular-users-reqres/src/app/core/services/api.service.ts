@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { CacheService } from './cache.service';
 import { User } from '../models/user.model';
 import { UsersApiResponse } from '../models/api-response.model';
-import { API_CONFIG } from '../constants';
+import { environment } from '../../../environments/environment';
 
 /**
  * API service for managing HTTP requests to ReqRes API
@@ -16,9 +16,14 @@ import { API_CONFIG } from '../constants';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl = API_CONFIG.BASE_URL;
+  private readonly baseUrl = environment.apiUrl;
   private readonly http = inject(HttpClient);
   private readonly cache = inject(CacheService);
+
+  // HTTP headers with API key from environment
+  private readonly headers = new HttpHeaders({
+    'x-api-key': environment.apiKey,
+  });
 
   // Signal to track if data has been loaded
   private isDataLoaded = signal(false);
@@ -44,13 +49,17 @@ export class ApiService {
     }
 
     // Fetch from API if not cached
-    return this.http.get<UsersApiResponse>(`${this.baseUrl}/users?page=${page}`).pipe(
-      // Cache the response
-      tap((response) => {
-        this.cache.set(cacheKey, response);
-        this.isDataLoaded.set(true);
-      }),
-    );
+    return this.http
+      .get<UsersApiResponse>(`${this.baseUrl}/users?page=${page}`, {
+        headers: this.headers,
+      })
+      .pipe(
+        // Cache the response
+        tap((response) => {
+          this.cache.set(cacheKey, response);
+          this.isDataLoaded.set(true);
+        }),
+      );
   }
 
   /**
@@ -72,12 +81,16 @@ export class ApiService {
     }
 
     // Fetch from API if not cached
-    return this.http.get<{ data: User }>(`${this.baseUrl}/users/${userId}`).pipe(
-      // Cache the response
-      tap((response) => {
-        this.cache.set(cacheKey, response);
-      }),
-    );
+    return this.http
+      .get<{ data: User }>(`${this.baseUrl}/users/${userId}`, {
+        headers: this.headers,
+      })
+      .pipe(
+        // Cache the response
+        tap((response) => {
+          this.cache.set(cacheKey, response);
+        }),
+      );
   }
 
   /**
