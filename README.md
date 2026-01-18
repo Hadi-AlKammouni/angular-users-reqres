@@ -63,9 +63,10 @@ npm install -g @angular/cli@20
 
 ## 📦 Installation
 
-1. **Clone or navigate to the project directory**:
+1. **Clone & navigate to the project directory**:
 
 ```bash
+git clone https://github.com/Hadi-AlKammouni/angular-users-reqres.git
 cd angular-users-reqres
 ```
 
