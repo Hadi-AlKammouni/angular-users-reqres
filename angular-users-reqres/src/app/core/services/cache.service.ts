@@ -55,27 +55,6 @@ export class CacheService {
   }
 
   /**
-   * Check if a key exists in cache and is not expired
-   * @param key - The cache key
-   * @returns True if key exists and is valid, false otherwise
-   */
-  has(key: string): boolean {
-    const item = this.cache.get(key);
-
-    if (!item) {
-      return false;
-    }
-
-    // Check if cache has expired
-    if (Date.now() > item.expirationTime) {
-      this.cache.delete(key);
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
    * Clear a specific cache entry
    * @param key - The cache key to remove
    */

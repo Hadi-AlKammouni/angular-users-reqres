@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, Subject } from 'rxjs';
 
 import { ApiService } from '../../../core/services/api.service';
@@ -28,7 +27,6 @@ import { User } from '../../../core/models/user.model';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatTooltipModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

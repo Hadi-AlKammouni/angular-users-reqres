@@ -325,20 +325,6 @@
   }
 }
 
-// Custom tooltip styling
-::ng-deep {
-  .home-tooltip {
-    background-color: rgba(33, 33, 33, 0.95) !important;
-    color: white !important;
-    font-size: 0.875rem !important;
-    font-weight: 500 !important;
-    padding: 8px 14px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-    letter-spacing: 0.02em !important;
-  }
-}
-
 // Animations
 @keyframes pulse {
   0%,
@@ -356,19 +342,6 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-6px);
-  }
-  75% {
     transform: translateY(-3px);
   }
 }

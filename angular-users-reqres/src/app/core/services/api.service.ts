@@ -25,9 +25,6 @@ export class ApiService {
     'x-api-key': environment.apiKey,
   });
 
-  // Signal to track if data has been loaded
-  private isDataLoaded = signal(false);
-
   constructor() {}
 
   /**
@@ -57,7 +54,6 @@ export class ApiService {
         // Cache the response
         tap((response) => {
           this.cache.set(cacheKey, response);
-          this.isDataLoaded.set(true);
         }),
       );
   }
@@ -91,30 +87,5 @@ export class ApiService {
           this.cache.set(cacheKey, response);
         }),
       );
-  }
-
-  /**
-   * Clear all cached data
-   * Useful for refresh operations
-   */
-  clearCache(): void {
-    this.cache.clear();
-    this.isDataLoaded.set(false);
-  }
-
-  /**
-   * Clear cache for a specific user
-   * @param userId - User ID
-   */
-  clearUserCache(userId: number): void {
-    this.cache.delete(`user_${userId}`);
-  }
-
-  /**
-   * Clear cache for a specific page
-   * @param page - Page number
-   */
-  clearPageCache(page: number): void {
-    this.cache.delete(`users_page_${page}`);
   }
 }
