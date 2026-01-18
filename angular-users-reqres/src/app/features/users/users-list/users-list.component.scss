@@ -127,15 +127,6 @@
       line-height: 1.3;
     }
 
-    .user-email {
-      margin: 0 0 0.75rem;
-      font-size: 0.9rem;
-      color: #666;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
     .user-id {
       font-size: 0.875rem;
       color: #999;
@@ -202,11 +193,6 @@
       &.skeleton-name {
         height: 20px;
         width: 70%;
-        margin: 0 auto 0.75rem;
-      }
-
-      &.skeleton-email {
-        width: 85%;
         margin: 0 auto 0.75rem;
       }
 
@@ -373,10 +359,6 @@
 
       .user-name {
         font-size: 1.125rem;
-      }
-
-      .user-email {
-        font-size: 0.85rem;
       }
     }
   }
