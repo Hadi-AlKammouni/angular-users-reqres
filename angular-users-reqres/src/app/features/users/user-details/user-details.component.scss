@@ -649,35 +649,3 @@
     }
   }
 }
-
-// Dark mode support (optional)
-@media (prefers-color-scheme: dark) {
-  .user-details-container {
-    .user-details-card,
-    .loading-container,
-    .error-state,
-    .empty-state {
-      background: rgba(30, 41, 59, 0.95);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .user-info {
-      .name-section .user-id-badge {
-        background: rgba(51, 65, 85, 0.8);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: #e2e8f0;
-      }
-
-      .info-item {
-        background: rgba(51, 65, 85, 0.6);
-        border-color: rgba(255, 255, 255, 0.1);
-
-        .info-details {
-          .info-value {
-            color: #e2e8f0;
-          }
-        }
-      }
-    }
-  }
-}
