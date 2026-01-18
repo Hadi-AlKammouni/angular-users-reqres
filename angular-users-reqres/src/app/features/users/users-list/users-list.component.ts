@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -18,6 +18,7 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-users-list',
   imports: [
     CommonModule,
+    NgOptimizedImage,
     MatCardModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,

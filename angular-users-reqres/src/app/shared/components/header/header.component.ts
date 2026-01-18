@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,6 +19,7 @@ import { User } from '../../../core/models/user.model';
   selector: 'app-header',
   imports: [
     CommonModule,
+    NgOptimizedImage,
     FormsModule,
     MatToolbarModule,
     MatInputModule,

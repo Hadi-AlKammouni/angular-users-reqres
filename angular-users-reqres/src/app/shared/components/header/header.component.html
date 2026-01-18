@@ -68,9 +68,12 @@
       <mat-card class="search-result-card" (click)="navigateToUser()">
         <div class="result-content">
           <img
-            [src]="foundUser()?.avatar"
+            [ngSrc]="foundUser()?.avatar || ''"
             [alt]="foundUser()?.first_name + ' ' + foundUser()?.last_name"
             class="result-avatar"
+            width="128"
+            height="128"
+            priority
           />
           <div class="result-info">
             <h3 class="result-name">{{ foundUser()?.first_name }} {{ foundUser()?.last_name }}</h3>

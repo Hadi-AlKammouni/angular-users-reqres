@@ -34,10 +34,11 @@
           <div class="user-avatar-container">
             <div class="avatar-wrapper" (click)="openAvatarFullSize()">
               <img
-                [src]="user()!.avatar"
+                [ngSrc]="user()!.avatar"
                 [alt]="getFullName()"
                 class="user-avatar-large"
-                loading="lazy"
+                width="256"
+                height="256"
               />
               <div class="avatar-overlay">
                 <mat-icon>zoom_in</mat-icon>
