@@ -91,4 +91,14 @@ export class UserDetailsComponent implements OnInit {
     }
     return `${u.first_name} ${u.last_name}`;
   }
+
+  /**
+   * Open avatar image in new tab at full size
+   */
+  openAvatarFullSize(): void {
+    const u = this.user();
+    if (u?.avatar) {
+      window.open(u.avatar, '_blank');
+    }
+  }
 }
